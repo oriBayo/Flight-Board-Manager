@@ -1,0 +1,38 @@
+# === React / Node.js ===
+node_modules/
+dist/
+build/
+.env
+.env.local
+.env.development
+.env.production
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# === ASP.NET Core ===
+## Ignore Visual Studio temporary files, build results, and
+## user-specific files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Build results
+bin/
+obj/
+out/
+
+## .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Rider files
+.idea/
+
+# === General ===
+.DS_Store
+Thumbs.db
