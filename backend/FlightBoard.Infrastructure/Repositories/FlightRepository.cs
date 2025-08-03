@@ -15,7 +15,7 @@ public class FlightRepository : IFlightRepository
         _context = context;
     }
 
-    public async Task AddFlightAsync(Flight flight)
+    public async Task CreateFlightAsync(Flight flight)
     {
         _context.Flights.Add(flight);
         await _context.SaveChangesAsync();
@@ -35,6 +35,11 @@ public class FlightRepository : IFlightRepository
         }
     }
 
+    public async Task<bool> FlightNumberExistsAsync(string flightNumber)
+    {
+        return await _context.Flights.AnyAsync(f => f.FlightNumber == flightNumber);
+    }
+
     public async Task<IEnumerable<Flight>> GetAllFlightsAsync()
     {
         return await _context.Flights.ToListAsync();
@@ -46,7 +51,7 @@ public class FlightRepository : IFlightRepository
 
         if (!string.IsNullOrEmpty(status))
         {
-            query = query.Where(f => f.Status.ToString().Equals(status, StringComparison.OrdinalIgnoreCase));
+            query = query.Where(f => f.Status.ToString().Contains(status));
         }
 
         if (!string.IsNullOrEmpty(destination))
@@ -55,6 +60,12 @@ public class FlightRepository : IFlightRepository
         }
 
         return await query.ToListAsync();
+    }
+
+    public async Task UpdateFlightAsync(Flight flight)
+    {
+        _context.Flights.Update(flight);
+        await _context.SaveChangesAsync();
     }
 }
 

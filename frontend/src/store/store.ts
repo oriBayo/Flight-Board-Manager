@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import formSlice from './slices/FormSlice';
-import searchSlice from './slices/SearchSlice';
+import formSlice from './slices/formSlice';
+import searchSlice from './slices/searchSlice';
+import eventsSlice from './slices/eventsSlice';
 
 export const store = configureStore({
   reducer: {
     form: formSlice,
     search: searchSlice,
+    events: eventsSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

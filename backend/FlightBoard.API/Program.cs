@@ -2,7 +2,7 @@ using Microsoft.OpenApi.Models;
 using FlightBoard.Infrastructure.DependencyInjection;
 using FlightBoard.Application.DependencyInjection;
 using FlightBoard.Infrastructure.Data;
-using FlightBoard.Application.Validators;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,11 +14,18 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins("http://localhost:3000")
               .AllowAnyMethod()
-              .AllowAnyHeader();
+              .AllowAnyHeader()
+            .AllowCredentials();
     });
 });
-
+builder.Services.AddLogging(logging =>
+{
+    logging.AddConsole();
+});
+builder.Services.AddScoped<IFlightNotifierService, FlightNotifierService>();
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
+builder.Services.AddHostedService<FlightStatusBackgroundService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -29,6 +36,7 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure(configuration.GetConnectionString("DefaultConnection")!);
 
 var app = builder.Build();
+app.MapHub<FlightBoardHub>("/flightBoardHub");
 
 app.UseCors("AllowFrontend");
 

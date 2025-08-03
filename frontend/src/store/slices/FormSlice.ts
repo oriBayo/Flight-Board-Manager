@@ -15,18 +15,10 @@ const FormSlice = createSlice({
   name: 'flightForm',
   initialState,
   reducers: {
-    updateField: (
-      state,
-      action: {
-        payload: {
-          field: keyof FlightFormState;
-          value: FlightFormState[keyof FlightFormState];
-        };
-      }
-    ) => {
-      const { field, value } = action.payload;
-      if (field in state) {
-        (state as any)[field] = value;
+    updateField: (state, action) => {
+      const { name, value } = action.payload;
+      if (name in state) {
+        (state as any)[name] = value;
       }
     },
     setError: (state, action) => {
@@ -35,13 +27,13 @@ const FormSlice = createSlice({
     setSubmitted: (state, action) => {
       state.isSubmitted = action.payload;
     },
-    resetFrom: (state) => {
+    resetForm: (state) => {
       return initialState;
     },
   },
 });
 
-export const { updateField, setSubmitted, setError, resetFrom } =
+export const { updateField, setSubmitted, setError, resetForm } =
   FormSlice.actions;
 
 export const selectFlightForm = (state: RootState): FlightFormState =>

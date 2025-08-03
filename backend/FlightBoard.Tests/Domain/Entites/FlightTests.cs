@@ -1,19 +1,10 @@
 using FlightBoard.Domain.Entities;
 using FlightBoard.Domain.Enums;
-using Xunit.Abstractions;
 
 namespace FlightBoard.Tests;
 
 public class FlightTests
 {
-
-    private readonly ITestOutputHelper _output;
-
-    public FlightTests(ITestOutputHelper output)
-    {
-        _output = output;
-    }
-
     [Theory]
     [InlineData(90, FlightStatus.Scheduled)]
     [InlineData(20, FlightStatus.Boarding)]
@@ -21,17 +12,17 @@ public class FlightTests
     [InlineData(-80, FlightStatus.Landed)]
     public void CalculateFlightStatus_ReturnExpectedStatus(double minutesFromNow, FlightStatus expectedStatus)
     {
-        // Arrange
+        // Given
         var flight = new Flight
         {
             DepartureTime = DateTime.UtcNow.AddMinutes(minutesFromNow)
         };
 
-        // Act
-        var status = flight.CalculateFlightStatus(DateTime.UtcNow);
+        // When
+        flight.CalculateFlightStatus(DateTime.UtcNow);
 
-        // Assert
-        Assert.Equal(expectedStatus, status);
+        // Then
+        Assert.Equal(expectedStatus, flight.Status);
     }
 
 }

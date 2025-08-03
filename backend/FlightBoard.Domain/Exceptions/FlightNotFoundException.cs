@@ -1,5 +1,3 @@
-using System;
-
 namespace FlightBoard.Domain.Exceptions;
 
 public class FlightNotFoundException : Exception

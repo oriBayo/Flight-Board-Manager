@@ -1,17 +1,28 @@
+import { Toaster } from 'react-hot-toast';
 import FlightForm from './components/FlightForm';
-import FlightList from './components/FlightList';
+import FlightTable from './components/FlightTable';
 import FlightSearch from './components/FlightSearch';
+import { useFlightBoardHub } from './hooks/useFlightBoardHub';
+import { Images } from './constants/images';
 
 function App() {
-  return (
-    <div className='py-10 px-20 min-h-screen bg-gray-100'>
-      <h1 className='text-5xl font-bold text-gray-800 mb-8 text-center'>
-        Real-Time Flight Board
-      </h1>
+  useFlightBoardHub();
 
-      <FlightForm />
-      <FlightSearch />
-      <FlightList />
+  return (
+    <div className='pb-10 pt-1 px-4 sm:px-8 lg:px-20 min-h-screen bg-gray-200'>
+      <div className='max-w-6xl mx-auto'>
+        <Toaster position='top-right' />
+        <img
+          src={Images.LOGO}
+          alt='logo'
+          className='mx-auto w-64 max-w-full object-contain'
+        />
+        <main className='space-y-8'>
+          <FlightForm />
+          <FlightSearch />
+          <FlightTable />
+        </main>
+      </div>
     </div>
   );
 }

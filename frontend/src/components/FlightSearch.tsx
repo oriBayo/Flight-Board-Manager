@@ -1,11 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectFlightSearch,
-  setSubmitted,
-  updateSearch,
-  updateStatus,
   resetSearch,
-} from '../store/slices/SearchSlice';
+  setSearchResults,
+  setSearchIsActive,
+  setFields,
+} from '../store/slices/searchSlice';
+import { Search, Eraser } from 'lucide-react';
+import { useSearchFlights } from '../hooks/useSearchFlights';
+import Title from './ui/Title';
+import FormField from './ui/FormField';
+import Button from './ui/Button';
 
 const options = [
   { value: '', label: 'All Status' },
@@ -17,60 +22,69 @@ const options = [
 
 const FlightSearch = () => {
   const dispatch = useDispatch();
-  const { search, status, submitted } = useSelector(selectFlightSearch);
+  const { destination, status } = useSelector(selectFlightSearch);
+  const { isFetching, refetch } = useSearchFlights({ status, destination });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(setSubmitted(true));
+    const { data: flights } = await refetch();
+    dispatch(setSearchResults(flights));
+    dispatch(setSearchIsActive(true));
+  };
+
+  const handleResetSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
     dispatch(resetSearch());
   };
 
-  return (
-    <div className='mx-auto p-6 rounded-lg shadow-md mb-8'>
-      <h1 className='text-2xl font-bold mb-4 text-gray-800'>Search</h1>
-      <div className='bg-white shadow-md rounded-lg py-6 px-8'>
-        <div className='flex items-center space-x-4'>
-          <select
-            className='px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
-            value={status}
-            onChange={(e) => dispatch(updateStatus(e.target.value))}
-          >
-            {options.map((options) => (
-              <option key={options.value} value={options.value}>
-                {options.label}
-              </option>
-            ))}
-          </select>
+  const handleChangeFields = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ): void => {
+    const { id, value } = e.target;
+    dispatch(setFields({ id, value }));
+  };
 
-          <div className='w-[50%]'>
-            <input
-              type='text'
-              value={search}
-              onChange={(e) => dispatch(updateSearch(e.target.value))}
-              placeholder='search flight...'
-              className=' mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
-              required
+  return (
+    <div className='container'>
+      <Title text='Search' />
+      <div className='card flex items-center space-x-4'>
+        <select
+          key='status'
+          className='select-input'
+          value={status}
+          onChange={handleChangeFields}
+        >
+          {options.map((options) => (
+            <option key={options.value} value={options.value}>
+              {options.label}
+            </option>
+          ))}
+        </select>
+
+        <div className='w-[60%]'>
+          <FormField
+            id='destination'
+            value={destination}
+            onChange={handleChangeFields}
+            placeholder='search flight...'
+          />
+        </div>
+        <div>
+          <Button
+            onClick={handleSubmit}
+            title={isFetching ? 'Searching...' : 'Search'}
+            Icon={Search}
+          />
+        </div>
+        {(status || destination) && (
+          <div>
+            <Button
+              onClick={handleResetSearch}
+              title='Clear Filters'
+              Icon={Eraser}
             />
           </div>
-          <div>
-            <button
-              onClick={handleSubmit}
-              className='w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-            >
-              {submitted ? 'Searching...' : 'Search'}
-            </button>
-          </div>
-          {(status || search) && (
-            <div>
-              <button
-                className='w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-                onClick={() => dispatch(resetSearch())}
-              >
-                Clear Filters
-              </button>
-            </div>
-          )}
-        </div>
+        )}
       </div>
     </div>
   );

@@ -3,34 +3,36 @@ import { FlightSearchState } from '../../types/Flight';
 import type { RootState } from '../store';
 
 const initialState: FlightSearchState = {
-  search: '',
+  destination: '',
   status: '',
-  submitted: false,
+  searchResults: [],
+  searchIsActive: false,
 };
 
-const filterSlice = createSlice({
+const searchSlice = createSlice({
   name: 'flightSearch',
   initialState,
   reducers: {
-    updateSearch: (state, action) => {
-      state.search = action.payload;
-    },
-    updateStatus: (state, action) => {
-      state.status = action.payload;
-    },
-    setSubmitted: (state, action) => {
-      state.submitted = action.payload;
+    setSearchResults: (state, action) => {
+      state.searchResults = action.payload;
     },
     resetSearch: (state) => {
       return initialState;
     },
+    setSearchIsActive: (state, action) => {
+      state.searchIsActive = action.payload;
+    },
+    setFields: (state, action) => {
+      const { id, value } = action.payload;
+      return { ...state, [id]: value };
+    },
   },
 });
 
-export const { updateSearch, updateStatus, setSubmitted, resetSearch } =
-  filterSlice.actions;
+export const { resetSearch, setSearchResults, setSearchIsActive, setFields } =
+  searchSlice.actions;
 
 export const selectFlightSearch = (state: RootState): FlightSearchState =>
   state.search;
 
-export default filterSlice.reducer;
+export default searchSlice.reducer;

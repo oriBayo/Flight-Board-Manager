@@ -1,4 +1,10 @@
-import { ValidationError } from './Validation';
+export type FlightStatus = 'Scheduled' | 'Boarding' | 'Departed' | 'Landed';
+
+export type FlightFormField =
+  | 'flightNumber'
+  | 'destination'
+  | 'gate'
+  | 'departureTime';
 
 export interface Flight {
   id: string;
@@ -8,8 +14,6 @@ export interface Flight {
   gate: string;
   statusString: FlightStatus;
 }
-
-export type FlightStatus = 'Scheduled' | 'Boarding' | 'Departed' | 'Landed';
 
 export interface FlightFormValidation {
   flightNumber?: string;
@@ -28,9 +32,10 @@ export interface FlightFormState {
 }
 
 export interface FlightSearchState {
-  search: string;
+  destination: string;
   status: FlightStatus | '';
-  submitted: boolean;
+  searchResults: Flight[];
+  searchIsActive: boolean;
 }
 
 export interface CreateFlightDto {
@@ -38,4 +43,16 @@ export interface CreateFlightDto {
   destination: string;
   gate: string;
   departureTime: string;
+}
+
+export interface FlightEventsState {
+  created: string[];
+  updated: string[];
+  deleted: string[];
+}
+
+export interface flightDetailsProps {
+  flight: Flight;
+  isNew: boolean;
+  isUpdated: boolean;
 }

@@ -12,16 +12,17 @@ public class Flight
     public FlightStatus Status { get; set; }
     public string StatusString => Status.ToString();
 
-    public FlightStatus CalculateFlightStatus(DateTime now)
+    public void CalculateFlightStatus(DateTime now)
     {
         var diff = DepartureTime - now;
 
         if (diff.TotalMinutes <= 0 && diff.TotalMinutes > -60)
-            return FlightStatus.Departed;
-        if (diff.TotalMinutes < 30 && diff.TotalMinutes >= 0)
-            return FlightStatus.Boarding;
-        if (diff.TotalMinutes <= -60)
-            return FlightStatus.Landed;
-        return FlightStatus.Scheduled;
+            Status = FlightStatus.Departed;
+        else if (diff.TotalMinutes < 30 && diff.TotalMinutes >= 0)
+            Status = FlightStatus.Boarding;
+        else if (diff.TotalMinutes <= -60)
+            Status = FlightStatus.Landed;
+        else
+            Status = FlightStatus.Scheduled;
     }
 }
