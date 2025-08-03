@@ -12,10 +12,13 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:3000")
+        var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>()
+                           ?? new[] { "http://localhost:3000" };
+
+        policy.WithOrigins(allowedOrigins)
               .AllowAnyMethod()
               .AllowAnyHeader()
-            .AllowCredentials();
+              .AllowCredentials();
     });
 });
 builder.Services.AddLogging(logging =>
@@ -36,6 +39,9 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure(configuration.GetConnectionString("DefaultConnection")!);
 
 var app = builder.Build();
+
+app.MapGet("/health", () => Results.Ok(new { status = "healthy", timestamp = DateTime.UtcNow }));
+
 app.MapHub<FlightBoardHub>("/flightBoardHub");
 
 app.UseCors("AllowFrontend");
@@ -51,8 +57,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+if (!app.Environment.IsProduction())
+{
+    app.UseHttpsRedirection();
 
-app.UseHttpsRedirection();
+}
 
 app.UseAuthorization();
 app.MapControllers();

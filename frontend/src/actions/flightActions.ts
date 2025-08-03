@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { CreateFlightDto } from '../types/Flight';
+import { API_CONFIG } from '../config/api';
 
-axios.defaults.baseURL = 'http://localhost:5140/api/Flights';
+axios.defaults.baseURL = `${API_CONFIG.baseURL}/Flights`;
 
 export const fetchFlights = async () => {
   const { data: flights } = await axios.get('');

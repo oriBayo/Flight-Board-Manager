@@ -8,13 +8,14 @@ import {
   flightUpdated,
 } from '../store/slices/eventsSlice';
 import { Flight } from '../types/Flight';
+import { API_CONFIG } from '../config/api';
 
 export const useFlightBoardHub = () => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   useEffect(() => {
     const connection = new HubConnectionBuilder()
-      .withUrl('http://localhost:5140/flightBoardHub', {
+      .withUrl(API_CONFIG.signalRHub, {
         withCredentials: true,
       })
       .withAutomaticReconnect()
