@@ -74,56 +74,56 @@ npm start
 
 ```
 FlightBoardManager/
-├── FlightBoardManager.sln          # קובץ פתרון Visual Studio
+├── FlightBoardManager.sln          
 ├── backend/
-│   ├── FlightBoard.API/           # שכבת API
-│   │   ├── Controllers/           # בקרים
-│   │   ├── Services/             # שירותים
-│   │   ├── Hubs/                 # SignalR hubs
-│   │   ├── Properties/           # הגדרות פרויקט
-│   │   ├── Program.cs            # נקודת כניסה
-│   │   ├── appsettings.json      # הגדרות
+│   ├── FlightBoard.API/           
+│   │   ├── Controllers/           
+│   │   ├── Services/             
+│   │   ├── Hubs/                 
+│   │   ├── Properties/           
+│   │   ├── Program.cs            
+│   │   ├── appsettings.json      
 │   │   ├── FlightBoard.API.csproj
-│   │   ├── flightboard.db        # בסיס נתונים SQLite
-│   │   └── obj/, bin/            # תיקיות build
+│   │   ├── flightboard.db        
+│   │   └── obj/, bin/            
 │   │
-│   ├── FlightBoard.Domain/        # שכבת הדומיין
-│   │   ├── Entities/             # ישויות עסקיות
-│   │   ├── Enums/               # ערכים קבועים
-│   │   ├── Exceptions/          # חריגות מותאמות
-│   │   ├── Interfaces/          # ממשקים
+│   ├── FlightBoard.Domain/        
+│   │   ├── Entities/             
+│   │   ├── Enums/               
+│   │   ├── Exceptions/          
+│   │   ├── Interfaces/          
 │   │   └── FlightBoard.Domain.csproj
 │   │
-│   ├── FlightBoard.Application/   # שכבת האפליקציה
-│   │   ├── Services/            # שירותי אפליקציה
-│   │   ├── Interfaces/          # ממשקי שירותים
-│   │   ├── DTOs/               # אובייקטי העברת נתונים
-│   │   ├── Validators/         # ולידטורים
-│   │   ├── Mapping/            # מיפוי אובייקטים
-│   │   ├── DependencyInjection/ # הזרקת תלויות
+│   ├── FlightBoard.Application/   
+│   │   ├── Services/            
+│   │   ├── Interfaces/          
+│   │   ├── DTOs/               
+│   │   ├── Validators/         
+│   │   ├── Mapping/            
+│   │   ├── DependencyInjection/ 
 │   │   └── FlightBoard.Application.csproj
 │   │
-│   ├── FlightBoard.Infrastructure/ # שכבת התשתית
-│   └── FlightBoard.Tests/         # בדיקות יחידה
+│   ├── FlightBoard.Infrastructure/ 
+│   └── FlightBoard.Tests/         
 │
-└── frontend/                      # React frontend
+└── frontend/                      
     ├── src/
-    │   ├── components/           # רכיבי React
-    │   ├── hooks/               # React hooks מותאמים
-    │   ├── store/               # ניהול מצב
-    │   ├── actions/             # פעולות
-    │   ├── types/               # הגדרות TypeScript
-    │   ├── utils/               # פונקציות עזר
-    │   ├── constants/           # קבועים
-    │   ├── App.tsx              # רכיב ראשי
-    │   ├── index.tsx            # נקודת כניסה
-    │   └── index.css            # עיצוב ראשי
+    │   ├── components/           
+    │   ├── hooks/               
+    │   ├── store/               
+    │   ├── actions/             
+    │   ├── types/               
+    │   ├── utils/               
+    │   ├── constants/           
+    │   ├── App.tsx              
+    │   ├── index.tsx            
+    │   └── index.css           
     │
-    ├── public/                   # קבצים סטטיים
-    ├── package.json             # תלויות npm
-    ├── tsconfig.json            # הגדרות TypeScript
-    ├── tailwind.config.js       # הגדרות Tailwind CSS
-    └── postcss.config.js        # הגדרות PostCSS
+    ├── public/                   
+    ├── package.json             
+    ├── tsconfig.json            
+    ├── tailwind.config.js       
+    └── postcss.config.js        
 ```
 
 ## Architecture
