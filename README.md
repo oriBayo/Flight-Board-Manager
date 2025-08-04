@@ -2,6 +2,10 @@
 
 A real-time flight management system built with ASP.NET Core and React. Features live updates via SignalR, flight status calculation, and a clean modern interface.
 
+<img width="1370" height="761" alt="Screenshot 2025-08-04 at 8 18 20" src="https://github.com/user-attachments/assets/a718ea73-ecff-4c7c-b937-f4d8747cdf67" />
+<img width="1533" height="687" alt="Screenshot 2025-08-04 at 8 18 30" src="https://github.com/user-attachments/assets/f6da49a1-2431-4134-843e-6a1964c66c93" />
+
+
 ## Quick Start
 
 ### Prerequisites
